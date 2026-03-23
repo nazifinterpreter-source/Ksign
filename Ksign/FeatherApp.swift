@@ -8,13 +8,12 @@
 import SwiftUI
 import Nuke
 import OSLog
+import IDeviceSwift
 
 @main
 struct FeatherApp: App {
 	@UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
-	#if IDEVICE
 	let heartbeat = HeartbeatManager.shared
-	#endif
 	@StateObject var downloadManager = DownloadManager.shared
 	@StateObject var accentColorManager = AccentColorManager.shared
     @StateObject var extractManager = ExtractManager.shared

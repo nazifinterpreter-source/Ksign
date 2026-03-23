@@ -177,9 +177,7 @@ struct LibraryView: View {
 			.sheet(item: $_selectedInstallAppPresenting) { app in
 				InstallPreviewView(app: app.base, isSharing: app.archive)
 					.presentationDetents([.height(200)])
-					.presentationDragIndicator(.visible)
-					.compatPresentationRadius(21)
-			}
+					.presentationDragIndicator(.visible)			}
 			.fullScreenCover(item: $_selectedSigningAppPresenting) { app in
 				SigningView(app: app.base, signAndInstall: app.signAndInstall)
 					.compatNavigationTransition(id: app.base.uuid ?? "", ns: _namespace)

@@ -48,15 +48,9 @@ struct SettingsView: View {
 					NavigationLink(destination: ArchiveView()) {
                         Label(.localized("Archive & Extraction"), systemImage: "archivebox")
                     }
-					#if SERVER
-					NavigationLink(destination: ServerView()) {
-                        Label(.localized("Server & SSL"), systemImage: "server.rack")
+					NavigationLink(destination: InstallationView()) {
+                        Label(.localized("Installation"), systemImage: "server.rack")
                     }
-					#elseif IDEVICE
-					NavigationLink(destination: TunnelView()) {
-                        Label(.localized("Tunnel & Pairing"), systemImage: "network")
-                    }
-					#endif
 				}
 				
 				_directories()

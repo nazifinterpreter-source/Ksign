@@ -7,31 +7,28 @@
 
 import SwiftUI
 import NimbleViews
+import IDeviceSwift
 
 struct BulkInstallProgressView: View {
     var app: AppInfoPresentable
     @StateObject var viewModel = InstallerStatusViewModel()
     
-    #if SERVER
+    @AppStorage("Feather.installationMethod") private var _installationMethod: Int = 0
     @AppStorage("Feather.serverMethod") private var _serverMethod: Int = 0
     @StateObject var installer: ServerInstaller
     @State private var _isWebviewPresenting = false
-    #endif
     
     init(app: AppInfoPresentable) {
         self.app = app
         let viewModel = InstallerStatusViewModel()
         self._viewModel = StateObject(wrappedValue: viewModel)
-        #if SERVER
         self._installer = StateObject(wrappedValue: try! ServerInstaller(app: app, viewModel: viewModel))
-        #endif
     }
     
     var body: some View {
         VStack {
             InstallProgressView(app: app, viewModel: viewModel)
         }
-        #if SERVER
         .sheet(isPresented: $_isWebviewPresenting) {
             SafariRepresentableView(url: installer.pageEndpoint).ignoresSafeArea()
         }
@@ -52,7 +49,6 @@ struct BulkInstallProgressView: View {
                 BackgroundAudioManager.shared.stop()
             }
         }
-        #endif
         .onAppear(perform: _install)
         .onAppear {
             BackgroundAudioManager.shared.start()
@@ -70,22 +66,19 @@ struct BulkInstallProgressView: View {
                 
                 let packageUrl = try await handler.archive()
                 
-                #if SERVER
-                await MainActor.run {
-                    installer.packageUrl = packageUrl
-                    viewModel.status = .ready
+                if await _installationMethod == 0 {
+                    await MainActor.run {
+                        installer.packageUrl = packageUrl
+                        viewModel.status = .ready
+                    }
+                } else if await _installationMethod == 1 {
+                    let proxy = await InstallationProxy(viewModel: viewModel)
+                    try await proxy.install(at: packageUrl, suspend: app.identifier == Bundle.main.bundleIdentifier!)
                 }
-                #elseif IDEVICE
-                let handler = await ConduitInstaller(viewModel: viewModel)
-                try await handler.install(at: packageUrl)
-                #endif
                 
             } catch {
                 await MainActor.run {
-                    #if IDEVICE
                     HeartbeatManager.shared.start(true)
-                    #endif
-                    
                 }
             }
         }

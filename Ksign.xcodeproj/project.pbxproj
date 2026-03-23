@@ -19,6 +19,9 @@
 		336D43982DB7454A00206400 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 336D43972DB7454A00206400 /* MobileCoreServices.framework */; };
 		3371F7322DA9ECDD00281AC6 /* Zip in Frameworks */ = {isa = PBXBuildFile; productRef = 3371F7312DA9ECDD00281AC6 /* Zip */; };
 		33CF13392DB5ACFB0021D4C5 /* SWCompression in Frameworks */ = {isa = PBXBuildFile; productRef = 33CF13382DB5ACFB0021D4C5 /* SWCompression */; };
+		C42CC1AD2F4370F20064A4A2 /* IDevice in Frameworks */ = {isa = PBXBuildFile; productRef = C42CC1AC2F4370F20064A4A2 /* IDevice */; };
+		C42CC1AF2F4370F20064A4A2 /* IDeviceSwift in Frameworks */ = {isa = PBXBuildFile; productRef = C42CC1AE2F4370F20064A4A2 /* IDeviceSwift */; };
+		C42CC1B12F4370F20064A4A2 /* plist in Frameworks */ = {isa = PBXBuildFile; productRef = C42CC1B02F4370F20064A4A2 /* plist */; };
 		C451296C2E54F0DC00E94CC7 /* ZIPFoundation in Frameworks */ = {isa = PBXBuildFile; productRef = C451296B2E54F0DB00E94CC7 /* ZIPFoundation */; };
 		C4CEAE0C2DDF4735007EF880 /* ArArchiveKit in Frameworks */ = {isa = PBXBuildFile; productRef = C4CEAE0B2DDF4735007EF880 /* ArArchiveKit */; };
 /* End PBXBuildFile section */
@@ -43,16 +46,8 @@
 		3371F6492DA92A1800281AC6 /* Exceptions for "Ksign" folder in "Ksign" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
-				Backend/Heartbeat/ConduitInstaller.swift,
-				Backend/Heartbeat/Heartbeat.swift,
-				"Backend/Heartbeat/Heartbeat+checks.swift",
-				"Backend/Heartbeat/Heartbeat+start.swift",
 				Resources/ellekit.deb,
-				Resources/idevice/libidevice_ffi.a,
-				"Resources/idevice/libplist-2.0.a",
 				Resources/Info.plist,
-				"Views/Settings/Tunnel & Pairing/TunnelHeaderCellView.swift",
-				"Views/Settings/Tunnel & Pairing/TunnelView.swift",
 			);
 			target = 3379C1B82DA869A1004372DA /* Ksign */;
 		};
@@ -87,7 +82,9 @@
 			files = (
 				330F68FE2DBF7C8600D8C35D /* NimbleViews in Frameworks */,
 				C4CEAE0C2DDF4735007EF880 /* ArArchiveKit in Frameworks */,
+				C42CC1AF2F4370F20064A4A2 /* IDeviceSwift in Frameworks */,
 				330F68FC2DBF7C8600D8C35D /* NimbleExtensions in Frameworks */,
+				C42CC1AD2F4370F20064A4A2 /* IDevice in Frameworks */,
 				3346F5C22DC329A200C7D508 /* ZsignSwift in Frameworks */,
 				3346F8492DC6D64800C7D508 /* NimbleJSON in Frameworks */,
 				330F69012DC03DF500D8C35D /* NimbleExtensions in Frameworks */,
@@ -98,6 +95,7 @@
 				3305BBAC2DB8944200660D45 /* Vapor in Frameworks */,
 				3346F83B2DC6C6D100C7D508 /* NukeUI in Frameworks */,
 				336D43982DB7454A00206400 /* MobileCoreServices.framework in Frameworks */,
+				C42CC1B12F4370F20064A4A2 /* plist in Frameworks */,
 				C451296C2E54F0DC00E94CC7 /* ZIPFoundation in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -173,6 +171,9 @@
 				33693A072DC8BF5B00730215 /* AltSourceKit */,
 				C4CEAE0B2DDF4735007EF880 /* ArArchiveKit */,
 				C451296B2E54F0DB00E94CC7 /* ZIPFoundation */,
+				C42CC1AC2F4370F20064A4A2 /* IDevice */,
+				C42CC1AE2F4370F20064A4A2 /* IDeviceSwift */,
+				C42CC1B02F4370F20064A4A2 /* plist */,
 			);
 			productName = Feather;
 			productReference = 3379C1B92DA869A1004372DA /* Ksign.app */;
@@ -244,6 +245,7 @@
 				C4CEAE0A2DDF416B007EF880 /* XCRemoteSwiftPackageReference "ArArchiveKit" */,
 				C40422132E119AF900D1F324 /* XCLocalSwiftPackageReference "Zsign" */,
 				C45128062E54E8E900E94CC7 /* XCRemoteSwiftPackageReference "ZIPFoundation" */,
+				C42CC1AB2F4370F20064A4A2 /* XCLocalSwiftPackageReference "IDeviceKit" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 3379C1BA2DA869A1004372DA /* Products */;
@@ -667,6 +669,10 @@
 			isa = XCLocalSwiftPackageReference;
 			relativePath = Zsign;
 		};
+		C42CC1AB2F4370F20064A4A2 /* XCLocalSwiftPackageReference "IDeviceKit" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = IDeviceKit;
+		};
 /* End XCLocalSwiftPackageReference section */
 
 /* Begin XCRemoteSwiftPackageReference section */
@@ -781,6 +787,18 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 33CF13372DB5ACFB0021D4C5 /* XCRemoteSwiftPackageReference "SWCompression" */;
 			productName = SWCompression;
+		};
+		C42CC1AC2F4370F20064A4A2 /* IDevice */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = IDevice;
+		};
+		C42CC1AE2F4370F20064A4A2 /* IDeviceSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = IDeviceSwift;
+		};
+		C42CC1B02F4370F20064A4A2 /* plist */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = plist;
 		};
 		C451296B2E54F0DB00E94CC7 /* ZIPFoundation */ = {
 			isa = XCSwiftPackageProductDependency;

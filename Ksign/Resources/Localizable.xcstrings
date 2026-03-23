@@ -796,6 +796,17 @@
         }
       }
     },
+    "Advanced Installation Method" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tính năng cài đặt nâng cao"
+          }
+        }
+      }
+    },
     "Alert" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -4885,6 +4896,23 @@
         }
       }
     },
+    "idevice warning" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "This is an advanced installation method that required computer, proceed?"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Đây là phương thức cài đặt nâng cao, yêu cầu phải có máy tính để sử dụng. Bạn có chắc chắn không?"
+          }
+        }
+      }
+    },
     "Import" : {
       "comment" : "Import repositories",
       "localizations" : {
@@ -5438,6 +5466,17 @@
             "value" : "Yükle"
           }
         },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cài đặt"
+          }
+        }
+      }
+    },
+    "Installation" : {
+      "extractionState" : "manual",
+      "localizations" : {
         "vi" : {
           "stringUnit" : {
             "state" : "translated",

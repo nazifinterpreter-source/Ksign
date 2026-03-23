@@ -27,7 +27,7 @@ struct BulkInstallPreviewView: View {
              }
              .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
              .background(Color(UIColor.secondarySystemBackground))
-             .cornerRadius(12)
+             .cornerRadius(22.5)
              .padding()
         } else {
              LazyVGrid(columns: columns, spacing: 20) {
@@ -37,7 +37,7 @@ struct BulkInstallPreviewView: View {
              }
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
             .background(Color(UIColor.secondarySystemBackground))
-            .cornerRadius(12)
+            .cornerRadius(22.5)
             .padding()
         }
     }

@@ -7,6 +7,7 @@
 
 import SwiftUI
 import NimbleViews
+import IDeviceSwift
 
 // MARK: - View
 struct InstallPreviewView: View {
@@ -16,16 +17,13 @@ struct InstallPreviewView: View {
 	@AppStorage("Feather.useShareSheetForArchiving") private var _useShareSheet: Bool = false
 	
 	// Methods
-	#if SERVER
+    @AppStorage("Feather.installationMethod") private var _installationMethod: Int = 0
 	@AppStorage("Feather.serverMethod") private var _serverMethod: Int = 0
 	@State private var _isWebviewPresenting = false
-	#endif
 	
 	var app: AppInfoPresentable
 	@StateObject var viewModel: InstallerStatusViewModel
-	#if SERVER
 	@StateObject var installer: ServerInstaller
-	#endif
 	@State var isSharing: Bool
 
 	init(app: AppInfoPresentable, isSharing: Bool = false) {
@@ -33,9 +31,7 @@ struct InstallPreviewView: View {
 		self.isSharing = isSharing
 		let viewModel = InstallerStatusViewModel()
 		self._viewModel = StateObject(wrappedValue: viewModel)
-		#if SERVER
 		self._installer = StateObject(wrappedValue: try! ServerInstaller(app: app, viewModel: viewModel))
-		#endif
 	}
 	
 	// MARK: Body
@@ -46,16 +42,12 @@ struct InstallPreviewView: View {
 		}
 		.frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
 		.background(Color(UIColor.secondarySystemBackground))
-		.cornerRadius(12)
+        .cornerRadius(22.5)
 		.padding()
-		#if SERVER
 		.sheet(isPresented: $_isWebviewPresenting) {
 			SafariRepresentableView(url: installer.pageEndpoint).ignoresSafeArea()
 		}
 		.onReceive(viewModel.$status) { newStatus in
-			#if DEBUG
-			print(newStatus)
-			#endif
 			if case .ready = newStatus {
 				if _serverMethod == 0 {
 					UIApplication.shared.open(URL(string: installer.iTunesLink)!)
@@ -72,7 +64,6 @@ struct InstallPreviewView: View {
                 BackgroundAudioManager.shared.stop()
             }
 		}
-		#endif
 		.onAppear(perform: _install)
 		.onAppear {
 			BackgroundAudioManager.shared.start()
@@ -100,15 +91,16 @@ struct InstallPreviewView: View {
 				let packageUrl = try await handler.archive()
 				
 				if await !isSharing {
-					#if SERVER
-					await MainActor.run {
-						installer.packageUrl = packageUrl
-						viewModel.status = .ready
-					}
-					#elseif IDEVICE
-					let handler = await ConduitInstaller(viewModel: viewModel)
-					try await handler.install(at: packageUrl)
-					#endif
+                    if await _installationMethod == 0 {
+                        await MainActor.run {
+                            installer.packageUrl = packageUrl
+                            viewModel.status = .ready
+                        }
+                    }
+                    else if await _installationMethod == 1 {
+                        let handler = await InstallationProxy(viewModel: viewModel)
+                        try await handler.install(at: packageUrl, suspend: app.identifier == Bundle.main.bundleIdentifier!)
+                    }
 				} else {
 					let package = try await handler.moveToArchive(packageUrl, shouldOpen: !_useShareSheet)
 					
@@ -131,9 +123,7 @@ struct InstallPreviewView: View {
 						title: .localized("Install"),
 						message: error.localizedDescription,
 						action: {
-							#if IDEVICE
 							HeartbeatManager.shared.start(true)
-							#endif
 							dismiss()
 						}
 					)

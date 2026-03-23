@@ -10,6 +10,7 @@ import UIKit.UIImage
 import Zsign
 import NimbleJSON
 import AltSourceKit
+import IDeviceSwift
 
 enum FR {
 	static func handlePackageFile(
@@ -143,7 +144,6 @@ enum FR {
 		}
 	}
 	
-	#if IDEVICE
 	static func movePairing(_ url: URL) {
 		let fileManager = FileManager.default
 		let dest = URL.documentsDirectory.appendingPathComponent("pairingFile.plist")
@@ -154,7 +154,6 @@ enum FR {
 		
 		HeartbeatManager.shared.start(true)
 	}
-	#endif
 	
 	#if SERVER
 	static func downloadSSLCertificates(
